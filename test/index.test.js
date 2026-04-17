@@ -1,4 +1,5 @@
 /* eslint-env jest */
+import { jest, describe, test, expect, beforeAll } from '@jest/globals'
 
 const State = {
   ref: '',
@@ -12,25 +13,22 @@ const State = {
   }
 }
 
-jest.mock('@actions/github', () => {
-  return {
-    context: {
-      get ref () {
-        return State.ref
-      }
+jest.unstable_mockModule('@actions/github', () => ({
+  context: {
+    get ref () {
+      return State.ref
     }
   }
-})
+}))
 
-jest.mock('@actions/core', () => {
-  return {
-    setOutput (key, value) {
-      State.setOutput(key, value)
-    }
-  }
-})
+jest.unstable_mockModule('@actions/core', () => ({
+  setOutput (key, value) {
+    State.setOutput(key, value)
+  },
+  setFailed (msg) {}
+}))
 
-const getVersionAction = require('../src')
+const { default: getVersionAction } = await import('../src/index.js')
 
 describe('get-version', () => {
   beforeAll(() => {

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const { extractVersionFromRef } = require('../src/extract')
+import { extractVersionFromRef } from '../src/extract.js'
 
 describe('extractVersionFromRef', () => {
   describe('raw version', () => {

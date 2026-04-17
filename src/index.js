@@ -1,7 +1,9 @@
-const core = require('@actions/core')
-const github = require('@actions/github')
+import { setOutput, setFailed } from '@actions/core'
+import { context } from '@actions/github'
 
-const { extractVersionFromRef } = require('./extract')
+import { extractVersionFromRef } from './extract.js'
+
+import { fileURLToPath } from 'node:url'
 
 const OUTPUTS = {
   version: 'version',
@@ -14,24 +16,24 @@ const OUTPUTS = {
   isPrerelease: 'is-prerelease'
 }
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   main()
 }
 
-module.exports = main
+export default main
 
 function main () {
   try {
-    const result = extractVersionFromRef(github.context.ref)
+    const result = extractVersionFromRef(context.ref)
 
     Object.keys(result).forEach(key => {
-      core.setOutput(OUTPUTS[key], result[key])
+      setOutput(OUTPUTS[key], result[key])
     })
 
     if (Object.prototype.hasOwnProperty.call(result, 'major')) {
-      core.setOutput('is-semver', 'true')
+      setOutput('is-semver', 'true')
     }
   } catch (error) {
-    core.setFailed(error.message)
+    setFailed(error.message)
   }
 }

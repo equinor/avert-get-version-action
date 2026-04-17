@@ -1,4 +1,4 @@
-const semver = require('semver')
+import { parse } from 'semver'
 
 const REF_SEPARATOR = '/'
 const PRERELEASE_SEPARATOR = '.'
@@ -24,7 +24,7 @@ function extractVersionFromRef (ref) {
 }
 
 function parseSemver (version) {
-  const sv = semver.parse(version)
+  const sv = parse(version)
 
   if (!sv) {
     return {}
@@ -49,6 +49,4 @@ function parseSemver (version) {
   return result
 }
 
-module.exports = {
-  extractVersionFromRef
-}
+export { extractVersionFromRef }
