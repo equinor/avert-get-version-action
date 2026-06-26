@@ -1,12 +1,12 @@
-name: 'Get Version'
-description: 'Extracts the version from github.ref.'
+name: "Get Version"
+description: "Extracts the version from github.ref."
 outputs:
   version:
     description: 'The pushed version, for example "v1.2.7"'
   version-without-v:
     description: 'The pushed version, without the v prefix, for example "1.2.7"'
   is-semver:
-    description: 'Set to true if the pushed version is a valid semver value. Undefined otherwise.'
+    description: "Set to true if the pushed version is a valid semver value. Undefined otherwise."
   major:
     description: 'The semver major version, for example "1" in the case of "v1.2.3-ALPHA.0+BUILD.1"'
   minor:
@@ -18,8 +18,8 @@ outputs:
   build:
     description: 'The semver build version, for example "BUILD.1" in the case of "v1.2.3-ALPHA.0+BUILD.1"'
   is-prerelease:
-          description: 'Set to true if the pushed version is a prerelease. otherwise false.'
-  
+    description: "Set to true if the pushed version is a prerelease. otherwise false."
+
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node24"
+  main: "dist/index.js"
